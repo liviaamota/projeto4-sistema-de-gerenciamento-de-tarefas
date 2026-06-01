@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Gerenciador de Tarefas</title>
+
+<style>
+body{
+font-family:Arial;
+margin:40px;
+}
+
+.concluida{
+text-decoration:line-through;
+color:gray;
+}
+</style>
+
+</head>
+<body>
+
+<h1>Gerenciador de Tarefas</h1>
+
+<input id="tarefa" placeholder="Digite uma tarefa">
+
+<button onclick="adicionar()">
+Adicionar
+</button>
+
+<h3 id="contador">
+Tarefas: 0
+</h3>
+
+<ul id="lista"></ul>
+
+<script>
+
+let tarefas = [];
+
+function atualizar() {
+
+const ul = document.getElementById("lista");
+ul.innerHTML = "";
+
+tarefas.forEach((tarefa,index)=>{
+
+const li = document.createElement("li");
+
+if(tarefa.concluida){
+li.classList.add("concluida");
+}
+
+li.innerHTML = `
+${tarefa.texto}
+<button onclick="concluir(${index})">
+Concluir
+</button>
+`;
+
+ul.appendChild(li);
+
+});
+
+document.getElementById("contador").innerText =
+`Tarefas: ${tarefas.length}`;
+
+}
+
+function adicionar(){
+
+const input = document.getElementById("tarefa");
+
+if(input.value.trim() === ""){
+return;
+}
+
+tarefas.push({
+texto: input.value,
+concluida:false
+});
+
+input.value = "";
+
+atualizar();
+
+}
+
+function concluir(index){
+
+tarefas[index].concluida = true;
+
+atualizar();
+
+}
+
+</script>
+
+</body>
+</html>
